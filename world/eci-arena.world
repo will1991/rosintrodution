@@ -1,0 +1,185 @@
+#include "S1R.inc"
+#include "hokuyo.inc"
+
+window
+(
+  size [ 635 666 ] # in pixels
+  scale 30.000            
+     # pixels per meteri
+  center [ -0.019  -0.282 ]
+  rotate [ 0.000  0.000 ]
+         
+  show_data 1              # 1=on 0=off
+)
+
+define hokuyolaser ranger
+(
+  # laser-specific properties
+  # factory settings for LMS200	
+  sensor(
+  fov 270.0
+  range [0.0 5.0]
+  samples 682
+  )
+
+  # generic model properties
+  color "blue"
+  size [ 0.050 0.050 0.070 ]
+)
+
+define erratic position 
+(
+  #localization "odom"
+  #odom_error [0.0 0.01 0.0 0.01 0.0 0.01]
+
+  #color "blue"
+
+  size [ 0.174 0.162 0.180]
+  origin [0.000 0.000 0.000 0.000]
+  mass 2.0
+  block(
+	 points 8
+	 point[7] [ 0.087  0.045 ]
+	 point[6] [ 0.087 -0.045 ]
+	 point[5] [ 0.050 -0.081 ]
+	 point[4] [-0.050 -0.081 ]
+	 point[3] [-0.087 -0.045 ]
+	 point[2] [-0.087  0.045 ]
+	 point[1] [-0.050  0.081 ]
+	 point[0] [ 0.050  0.081 ]
+	 z [0 0.06]
+      )
+
+  gui_nose 1
+  drive "diff"
+  hokuyolaser(pose [ 0.040 0.000 0.000 0.000 ])
+  localization "gps"
+  localization_origin [ 0 0 0 0 ]
+)
+
+#S1R
+#(       
+  # can refer to the robot by this name
+#  name "r0"
+# pose [ 1.20 2.00 0 150 ]
+
+#  ranger(
+#   color "gray"
+ # pose [0.04 0.00 -0.11 0]
+#  )
+
+#  alwayson 1
+#  localization "gps"
+#  localization_origin [ 0 0 0 0 ]
+#  laser_return 0
+#)
+
+define obstacle model
+(
+  name "unknown"
+  color  "orange"
+  pose [0 0 0 0]
+  size [0 0 0]
+  gui_nose 0
+  gui_grid 0
+  gui_move 1
+  gui_outline 0
+
+  # insensible to collision and range sensors
+  obstacle_return 1
+#  laser_return 1
+  ranger_return 1.000  
+)
+
+obstacle(name "1" pose [1.710 0.020 0.000 90.000] size [0.040 3.340 0.250] color "brown")
+obstacle(name "2" pose [1.710 3.700 0.000 90.000] size [0.040 3.340 0.250] color "brown")
+obstacle(name "3" pose [0.020 1.860 0.000 0.000] size [0.040 3.720 0.250] color "brown")
+obstacle(name "4" pose [3.400 1.860 0.000 0.000] size [0.040 3.720 0.250] color "brown")
+obstacle(name "5" pose [0.660 0.180 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "6" pose [0.660 0.500 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "7" pose [1.620 0.180 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "8" pose [1.620 0.500 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "9" pose [2.260 0.220 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "10" pose [2.260 0.500 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "11" pose [2.760 0.180 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "12" pose [0.820 0.660 0.000 90.000] size [0.040 0.280 0.250] color "red")
+#obstacle(name "13" pose [1.78 0.66 0 90.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "14" pose [3.240 0.660 0.000 90.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "15" pose [0.820 1.300 0.000 90.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "16" pose [1.460 1.300 0.000 90.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "17" pose [1.460 0.980 0.000 90.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "18" pose [1.460 1.620 0.000 90.000] size [0.040 0.280 0.250] color "red")
+#obstacle(name "19" pose [1.78 1.62 0 90.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "20" pose [2.420 0.980 0.000 90.000] size [0.040 0.280 0.250] color "red")
+#obstacle(name "21" pose [2.26 1.46 0 0.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "22" pose [2.900 1.460 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "23" pose [1.620 1.140 0.000 0.000] size [0.040 0.280 0.250] color "red")
+obstacle(name "24" pose [0.980 1.140 0.000 0.000] size [0.040 0.280 0.250] color "red")
+#obstacle(name "25" pose [1.74 1.14 0 0.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "26" pose [0.500 0.340 0.000 90.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "27" pose [0.180 0.660 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "28" pose [1.160 0.340 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "29" pose [1.480 0.340 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "30" pose [1.440 0.660 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "31" pose [2.100 0.660 0.000 90.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "32" pose [2.940 0.660 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "33" pose [0.980 0.480 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "34" pose [0.980 0.820 0.000 0.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "35" pose [0.660 0.800 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "36" pose [0.660 1.140 0.000 0.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "37" pose [0.340 1.120 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "38" pose [0.340 1.440 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "39" pose [1.140 1.620 0.000 90.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "40" pose [0.800 1.620 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "41" pose [0.480 1.620 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "42" pose [2.100 1.620 0.000 90.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "43" pose [2.440 1.620 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "44" pose [2.760 1.620 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "45" pose [2.740 0.980 0.000 90.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "46" pose [2.900 1.160 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "47" pose [2.260 1.160 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "48" pose [2.260 0.840 0.000 0.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "49" pose [1.620 1.460 0.000 0.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "50" pose [1.620 0.820 0.000 0.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "51" pose [2.760 0.500 0.000 0.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "52" pose [1.120 1.300 0.000 90.000] size [0.040 0.320 0.250] color "gray49")
+obstacle(name "53" pose [1.300 1.140 0.000 0.000] size [0.040 0.360 0.250] color "gray49")
+obstacle(name "54" pose [2.260 0.060 0.000 0.000] size [0.040 0.040 0.250] color "gray49")
+obstacle(name "55" pose [0.340 1.850 0.000 0.000] size [0.040 0.420 0.250] color "gray49")
+#obstacle(name "56" pose [0.34 2.2 0 0.0] size [0.04 0.28 0.25] color "red")
+#obstacle(name "57" pose [0.34 2.48 0 0.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "58" pose [0.340 2.890 0.000 0.000] size [0.040 0.540 0.250] color "gray49")
+#obstacle(name "59" pose [0.18 3.18 0 90.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "60" pose [1.710 3.180 0.000 90.000] size [0.040 2.780 0.250] color "gray49")
+#obstacle(name "61" pose [3.24 3.18 0 90.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "62" pose [2.900 1.760 0.000 0.000] size [0.040 0.240 0.250] color "gray49")
+#obstacle(name "63" pose [2.9 2.02 0 0.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "64" pose [2.900 2.520 0.000 0.000] size [0.040 0.720 0.250] color "gray49")
+#obstacle(name "65" pose [2.9 3.02 0 0.0] size [0.04 0.28 0.25] color "red")
+#obstacle(name "66" pose [1.34 2.54 0 0.0] size [0.04 0.28 0.25] color "red")
+#obstacle(name "67" pose [1.48 2.28 0 45.0] size [0.04 0.28 0.25] color "red")
+#obstacle(name "68" pose [1.74 2.18 0 90.0] size [0.04 0.28 0.25] color "red")
+obstacle(name "69" pose [0.760 2.620 0.000 45.000] size [0.160 0.160 0.200] color "red")
+#obstacle(name "70" pose [0.66 2.18 0 0.0] size [0.16 0.16 0.2] color "red")
+#obstacle(name "71" pose [0.76 2.02 0 0.0] size [0.16 0.16 0.2] color "red")
+obstacle(name "72" pose [1.720 2.580 0.000 45.000] size [0.160 0.160 0.200] color "red")
+#obstacle(name "73" pose [2.4 2.94 0 0.0] size [0.16 0.16 0.2] color "red")
+obstacle(name "74" pose [2.520 2.350 0.000 45.000] size [0.160 0.160 0.200] color "red")
+#obstacle(name "75" pose [2.24 1.94 0 45.0] size [0.16 0.16 0.2] color "red")
+obstacle(name "76" pose [2.540 1.340 0.000 0.000] size [0.160 0.160 0.200] color "red")
+obstacle(name "77" pose [0.280 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "78" pose [0.540 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "79" pose [0.800 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "80" pose [1.060 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "81" pose [1.320 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "82" pose [1.580 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "83" pose [1.840 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "84" pose [2.100 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "85" pose [2.360 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "86" pose [2.620 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "87" pose [2.880 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "88" pose [3.140 3.590 0.000 0.000] size [0.080 0.180 0.130] color "brown")
+obstacle(name "89" pose [0.050 3.590 0.000 0.000] size [0.020 0.180 0.130] color "brown")
+obstacle(name "90" pose [3.370 3.590 0.000 0.000] size [0.020 0.180 0.130] color "brown")
+erratic(name "r0" pose [1.200 2.000 0.000 0.000] color "blue")
+
